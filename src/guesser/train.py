@@ -6,6 +6,7 @@ from datetime import datetime
 import pandas as pd
 import json
 from .device import device
+import matplotlib.pyplot as plt
 
 
 class model(torch.nn.Module):
@@ -95,6 +96,18 @@ def train_entrypoint():
     print(f"Vocabulary saved to {timestamp}-vocab.json")
     loss_table.to_csv(f"{timestamp}-loss.csv")
     print(f"Loss table saved to {timestamp}-loss.csv")
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.plot(
+        loss_table.index, loss_table["train_loss"], label="Train Loss"
+    )
+    ax.plot(
+        loss_table.index, loss_table["test_loss"], label="Test Loss"
+    )
+    ax.set_xlabel("Epoch")
+    ax.set_ylabel("Negative Log Likelihood Loss")
+    ax.set_title("Training and Test Loss Over Epochs")
+    ax.legend()
+    plt.savefig(f"{timestamp}-loss.png")
 
 
 def train_model(
