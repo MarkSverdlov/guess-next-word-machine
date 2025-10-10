@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "guess-next-word-machine"
+version = "0.0.1"
+dependencies = ["matplotlib", "numpy", "torch"]
+
+[project.scripts]
+chart-statistics = "guesser.preprocess:chart_statistics_entrypoint"
+train-model = "guesser.train:train_entrypoint"
+
+[tool.tox]
+requires = ["tox>=4.19"]
+
+[tool.tox.env_run_base]
+deps = ["pytest"]
+description = "Run unit tests"
+commands = [["pytest", { replace="posargs", default=["tests"], extend=true }]]
