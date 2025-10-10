@@ -80,7 +80,7 @@ def train_model(
     batch_size = 32
     sequence_length = 8
     embedding_dim = 128
-    epochs = 10
+    epochs = 1000
     learning_rate = 0.001
     hidden_dim = 256
     num_batches = 100  # Define how many batches to process per epoch
