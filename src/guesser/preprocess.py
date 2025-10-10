@@ -4,6 +4,7 @@ import random
 from collections import Counter
 import argparse
 import torch
+from .device import device
 
 
 class DataProcessor:
@@ -62,7 +63,7 @@ class DataProcessor:
         vocabulary = set()
         for line in self.lines:
             vocabulary.update(line)
-        vocabulary = list(sorted(vocabulary)) + ["NULL"]
+        vocabulary = ["NULL"] + list(sorted(vocabulary))
         return vocabulary
 
     def get_random_sequence(self, line_length):
@@ -84,8 +85,8 @@ class DataProcessor:
         for _ in range(batch_size):
             seq = self.get_random_sequence(line_length)
             translated_seq = self.translate(seq)
-            Xs.append(torch.tensor(translated_seq[:-1]))
-            ys.append(torch.tensor(translated_seq[1:]))
+            Xs.append(torch.tensor(translated_seq[:-1], device=device))
+            ys.append(torch.tensor(translated_seq[1:], device=device))
         Xs = torch.stack(Xs)
         ys = torch.stack(ys)
         return Xs, ys

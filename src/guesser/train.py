@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from datetime import datetime
 import pandas as pd
 import json
+from .device import device
 
 
 class model(torch.nn.Module):
@@ -83,6 +84,8 @@ def train_model(
     learning_rate = 0.001
     hidden_dim = 256
     num_batches = 100  # Define how many batches to process per epoch
+    torch.set_default_device(device)
+    print(f"Using device: {device}")
 
     N = len(train_processor.vocabulary)
     model_instance = model(N, embedding_dim, hidden_dim)
