@@ -122,6 +122,9 @@ def train_model(
             )
             print(f"Test Loss: {test_loss.item():.4f}")
             test_loss_by_epoch.append(test_loss.item())
+        if epoch % 100 == 99:
+            torch.save(model_instance, f"checkpoint-epoch{epoch+1}.pt")
+            print(f"Checkpoint saved for epoch {epoch + 1}")
 
     return (
         model_instance,
