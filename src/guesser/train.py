@@ -36,12 +36,6 @@ def train_entrypoint():
         type=str,
         help="Path to the corpus file",
     )
-    parser.add_argument(
-        "-o",
-        "--output",
-        type=str,
-        help="Path to save the trained model",
-    )
     args = parser.parse_args()
     with open(args.corpus, "r", encoding="utf-8") as f:
         data = f.readlines()
@@ -63,8 +57,8 @@ def train_entrypoint():
         columns=["train_loss", "test_loss"],
         index=range(1, len(train_loss) + 1),
     )
-    torch.save(trained_model, f"{timestamp}-args.output")
-    print(f"Model saved to {timestamp}-{args.output}")
+    torch.save(trained_model, f"{timestamp}-model.pt")
+    print(f"Model saved to {timestamp}-model.pt")
     json.dump(
         train_processor.vocabulary, open(f"{timestamp}-vocab.json", "w")
     )
