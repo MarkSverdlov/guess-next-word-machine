@@ -36,6 +36,28 @@ def train_entrypoint():
         type=str,
         help="Path to the corpus file",
     )
+    parser.add_argument("--bs", default=32, type=int, help="Batch size")
+    parser.add_argument(
+        "--sl", default=8, type=int, help="Sequence length"
+    )
+    parser.add_argument(
+        "--ed", default=128, type=int, help="Embedding dim"
+    )
+    parser.add_argument(
+        "--epochs", default=1000, type=int, help="Epochs"
+    )
+    parser.add_argument(
+        "--lr", default=0.001, type=float, help="Learning rate"
+    )
+    parser.add_argument(
+        "--hd", default=256, type=int, help="Hidden dim"
+    )
+    parser.add_argument(
+        "--nb",
+        default=100,
+        type=int,
+        help="Number of batches per epoch",
+    )
     args = parser.parse_args()
     with open(args.corpus, "r", encoding="utf-8") as f:
         data = f.readlines()
@@ -50,7 +72,15 @@ def train_entrypoint():
 
     timestamp = datetime.strftime(datetime.now(), "%Y%m%d%H%M")
     trained_model, train_loss, test_loss = train_model(
-        train_processor, test_data
+        train_processor=train_processor,
+        test_data=test_data,
+        batch_size=args.bs,
+        sequence_length=args.sl,
+        embedding_dim=args.ed,
+        epochs=args.epochs,
+        learning_rate=args.lr,
+        hidden_dim=args.hd,
+        num_batches=args.nb,
     )
     loss_table = pd.DataFrame(
         {"train_loss": train_loss, "test_loss": test_loss},
@@ -70,14 +100,14 @@ def train_entrypoint():
 def train_model(
     train_processor: DataProcessor,
     test_data: tuple[torch.Tensor, torch.Tensor],
+    batch_size=32,
+    sequence_length=8,
+    embedding_dim=128,
+    epochs=1000,
+    learning_rate=0.001,
+    hidden_dim=256,
+    num_batches=100,
 ):
-    batch_size = 32
-    sequence_length = 8
-    embedding_dim = 128
-    epochs = 1000
-    learning_rate = 0.001
-    hidden_dim = 256
-    num_batches = 100  # Define how many batches to process per epoch
     torch.set_default_device(device)
     print(f"Using device: {device}")
 
