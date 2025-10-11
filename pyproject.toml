@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "guess-next-word-machine"
 version = "0.0.1"
-dependencies = ["matplotlib", "numpy", "torch"]
+dependencies = ["matplotlib", "numpy", "torch", "pandas", "scikit-learn"]
 
 [project.scripts]
 chart-statistics = "guesser.preprocess:chart_statistics_entrypoint"
