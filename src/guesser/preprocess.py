@@ -30,22 +30,22 @@ class DataProcessor:
                 rval.append(self.translation_table["NULL"])
         return rval
 
-    def normalize_corpus(self):
+    @staticmethod
+    def normalize_line(line):
         allowed_characters = set(
             "abcdefghijklmnopqrstuvwxyz0123456789'"
         )
 
-        self.lines = [line.lower() for line in self.lines]
-        self.lines = [
-            "".join(
-                c
-                for c in line
-                if c in allowed_characters or c.isspace()
-            )
-            for line in self.lines
-        ]
-        self.lines = [line.replace("''", "") for line in self.lines]
-        self.lines = [line.split() for line in self.lines]
+        line = line.lower()
+        line = "".join(
+            [c for c in line if c in allowed_characters or c.isspace()]
+        )
+        line = line.replace("''", "")
+        line = line.split()
+        return line
+
+    def normalize_corpus(self):
+        self.lines = [self.normalize_line(line) for line in self.lines]
 
     @staticmethod
     def mask_word(word, alpha=1e-3):
