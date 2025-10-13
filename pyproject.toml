@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "guess-next-word-machine"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = ["matplotlib", "numpy", "torch", "pandas", "scikit-learn"]
 
 [project.scripts]
 chart-statistics = "guesser.preprocess:chart_statistics_entrypoint"
 train-model = "guesser.train:train_entrypoint"
+guess-next-word = "guesser.infer:infer_entrypoint"
 
 [tool.tox]
 requires = ["tox>=4.19"]
