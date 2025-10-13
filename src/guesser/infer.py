@@ -37,10 +37,14 @@ class InferenceModel:
         else:
             *sentence, first_letters = sentence.split()
             sentence = " ".join(sentence)
-            intermediate_results = infer_next_word(sentence)
-            return intermediate_results.loc[
+            intermediate_results = self.get_inference_results(sentence)
+            intermediate_results = intermediate_results.loc[
                 intermediate_results.index.str.startswith(first_letters)
-            ].head(top_k)
+            ]
+            return (
+                intermediate_results.head(top_k)
+                / intermediate_results["probability"].sum()
+            )
 
 
 def infer_entrypoint():
