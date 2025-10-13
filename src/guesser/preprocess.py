@@ -111,6 +111,16 @@ class DataProcessor:
     #     return data
 
 
+def get_word_total_by_unique_words(
+    word_counter, number_of_unique_words
+):
+    total = word_counter.total()
+    current_fraction = 0
+    for _, count in word_counter.most_common(number_of_unique_words):
+        current_fraction += count / total
+        yield current_fraction
+
+
 def chart_statistics(lines):
     lengths = np.array([len(line) for line in lines])
     mean = lengths.mean()
@@ -163,6 +173,16 @@ def chart_statistics(lines):
     axes[3].bar(common_words.keys(), common_words.values())
     axes[3].xaxis.set_tick_params(rotation=45)
     fig.savefig("word_frequency_distribution.png")
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+    x = list(range(1, number_of_unique_words + 1))
+    y = list(
+        get_word_total_by_unique_words(
+            word_counter, number_of_unique_words
+        )
+    )
+    ax.plot(x, y)
+    fig.savefig("cumulative_word_frequency.png")
 
 
 def chart_statistics_entrypoint():
