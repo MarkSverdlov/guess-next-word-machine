@@ -13,7 +13,9 @@ class model(torch.nn.Module):
     def __init__(self, N, d, e):
         super(model, self).__init__()
         self.embedding = torch.nn.Embedding(N, d)
-        self.RNN = torch.nn.LSTM(d, e, batch_first=True)
+        self.dropout1 = torch.nn.Dropout(0.1)
+        self.RNN = torch.nn.LSTM(d, e, batch_first=True, dropout=0.1)
+        self.dropout2 = torch.nn.Dropout(0.1)
         self.linear = torch.nn.Linear(e, N)
         self.logsoftmax = torch.nn.LogSoftmax(dim=-1)
 
@@ -22,8 +24,10 @@ class model(torch.nn.Module):
         Suppose x is of shape (batch_size, sequence_length), then the outpus is of shape (batch_size, sequence_length, N), where each N-dimensional vector is the probability distribution over the vocabulary for the corresponding position in the input sequence.
         """
         x = self.embedding(x)
+        x = self.dropout1(x)
         x, _ = self.RNN(x)
         x = self.linear(x)
+        x = self.dropout2(x)
         x = self.logsoftmax(x)
         return x
 
