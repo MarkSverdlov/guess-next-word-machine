@@ -8,13 +8,21 @@ from .device import device
 
 
 class DataProcessor:
-    def __init__(self, lines: list[str], mask=True, vocabulary=None):
+    def __init__(
+        self,
+        lines: list[str],
+        mask=True,
+        vocabulary=None,
+        maximum_vocabulary=10000,
+    ):
         self.lines = lines
         self.normalize_corpus()
         if vocabulary is not None:
             self.vocabulary = vocabulary
         else:
-            self.vocabulary = self.extract_vocabulary()
+            self.vocabulary = self.extract_vocabulary(
+                maximum_vocabulary
+            )
         self.translation_table = {
             word: idx for idx, word in enumerate(self.vocabulary)
         }
@@ -59,11 +67,18 @@ class DataProcessor:
             for line in self.lines
         ]
 
-    def extract_vocabulary(self):
-        vocabulary = set()
+    def extract_vocabulary(self, maximum_vocabulary):
+        counter = Counter()
         for line in self.lines:
-            vocabulary.update(line)
-        vocabulary = ["NULL"] + list(sorted(vocabulary))
+            counter.update(line)
+        vocabulary = ["NULL"] + sorted(
+            [
+                word
+                for word, _ in counter.most_common(
+                    maximum_vocabulary - 1
+                )
+            ]
+        )
         return vocabulary
 
     def get_random_sequence(self, line_length):
