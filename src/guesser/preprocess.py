@@ -26,12 +26,13 @@ class DataProcessor:
         self.translation_table = {
             word: idx for idx, word in enumerate(self.vocabulary)
         }
-        if mask:
-            self.mask_data()
+        self.mask = mask
 
     def translate(self, seq):
         rval = []
         for word in seq:
+            if self.mask:
+                word = self.mask_word(word)
             if word in self.translation_table:
                 rval.append(self.translation_table[word])
             else:
@@ -60,12 +61,6 @@ class DataProcessor:
         if random.random() < alpha:
             return "NULL"
         return word
-
-    def mask_data(self, alpha=1e-3):
-        self.lines = [
-            [self.mask_word(word, alpha) for word in line]
-            for line in self.lines
-        ]
 
     def extract_vocabulary(self, maximum_vocabulary):
         counter = Counter()
