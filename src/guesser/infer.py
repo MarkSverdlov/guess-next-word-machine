@@ -33,13 +33,23 @@ class InferenceModel:
 
     def infer(self, sentence: str, top_k=3):
         if sentence[-1] == " ":
-            return infer_next_word(sentence).head(top_k)
+            intermediate_results = self.get_inference_results(sentence)
+            intermediate_results = intermediate_results.loc[
+                intermediate_results.index != "NULL"
+            ]
+            return (
+                intermediate_results.head(top_k)
+                / intermediate_results["probability"].sum()
+            )
         else:
             *sentence, first_letters = sentence.split()
             sentence = " ".join(sentence)
             intermediate_results = self.get_inference_results(sentence)
             intermediate_results = intermediate_results.loc[
                 intermediate_results.index.str.startswith(first_letters)
+            ]
+            intermediate_results = intermediate_results.loc[
+                intermediate_results.index != "NULL"
             ]
             return (
                 intermediate_results.head(top_k)
