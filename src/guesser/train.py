@@ -102,6 +102,7 @@ def train_entrypoint():
     print(f"Vocabulary saved to {timestamp}-vocab.json")
     loss_table.to_csv(f"{timestamp}-loss.csv")
     print(f"Loss table saved to {timestamp}-loss.csv")
+    plt.style.use("ggplot")
     fig, ax = plt.subplots(figsize=(6, 3.375))
     ax.plot(
         loss_table.index, loss_table["train_loss"], label="Train Loss"

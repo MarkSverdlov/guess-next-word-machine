@@ -116,6 +116,7 @@ def chart_statistics(lines):
     lengths = np.array([len(line) for line in lines])
     mean = lengths.mean()
     median = np.median(lengths)
+    plt.style.use("ggplot")
     fig, ax = plt.subplots(figsize=(6, 3.375))
     ax.hist(lengths, bins=50)
     ax.text(
@@ -136,12 +137,17 @@ def chart_statistics(lines):
         size=12,
         weight="bold",
     )
+    ax.set_title("Histogram of Line Lengths")
+    ax.xaxis.set_label_text("Line Length")
+    ax.yaxis.set_label_text("Frequency")
+    fig.tight_layout()
     fig.savefig("length_distribution.png")
 
     word_counter = Counter()
     for line in lines:
         word_counter.update(line)
-    fig, axes = plt.subplots(2, 2, figsize=(6, 3.375))
+    plt.style.use("ggplot")
+    fig, axes = plt.subplots(2, 2, figsize=(6, 3.375 * 2))
     axes = axes.flatten()
     number_of_unique_words = len(word_counter.keys())
     fig.suptitle(
@@ -149,22 +155,24 @@ def chart_statistics(lines):
     )
     most_common_words = dict(word_counter.most_common(20))
     common_words = dict(word_counter.most_common(40)[20:])
-    axes[0].set_title("20 Most Common Words")
+    axes[0].set_title("20 Most Common Words", fontsize=8)
     axes[0].bar(most_common_words.keys(), most_common_words.values())
-    axes[0].xaxis.set_tick_params(rotation=45)
-    axes[1].set_title("21-40 Most Common Words")
+    axes[0].xaxis.set_tick_params(rotation=45, labelsize=6)
+    axes[1].set_title("21-40 Most Common Words", fontsize=8)
     axes[1].bar(common_words.keys(), common_words.values())
-    axes[1].xaxis.set_tick_params(rotation=45)
+    axes[1].xaxis.set_tick_params(rotation=45, labelsize=6)
     most_common_words = dict(word_counter.most_common(60)[40:])
     common_words = dict(word_counter.most_common(80)[60:])
-    axes[2].set_title("41-60 Most Common Words")
+    axes[2].set_title("41-60 Most Common Words", fontsize=8)
     axes[2].bar(most_common_words.keys(), most_common_words.values())
-    axes[2].xaxis.set_tick_params(rotation=45)
-    axes[3].set_title("61-80 Most Common Words")
+    axes[2].xaxis.set_tick_params(rotation=45, labelsize=6)
+    axes[3].set_title("61-80 Most Common Words", fontsize=8)
     axes[3].bar(common_words.keys(), common_words.values())
-    axes[3].xaxis.set_tick_params(rotation=45)
+    axes[3].xaxis.set_tick_params(rotation=45, labelsize=6)
+    fig.tight_layout()
     fig.savefig("word_frequency_distribution.png")
 
+    plt.style.use("ggplot")
     fig, ax = plt.subplots(figsize=(6, 3.375))
     x = list(range(1, number_of_unique_words + 1))
     y = list(
@@ -173,6 +181,10 @@ def chart_statistics(lines):
         )
     )
     ax.plot(x, y)
+    ax.set_title("Cumulative Word Frequency Distribution")
+    ax.xaxis.set_label_text("Number of Unique Words")
+    ax.yaxis.set_label_text("Cumulative Frequency")
+    fig.tight_layout()
     fig.savefig("cumulative_word_frequency.png")
 
 
