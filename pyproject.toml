@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "guess-next-word-machine"
-version = "0.0.2"
+version = "1.0.0"
 dependencies = ["matplotlib", "numpy", "torch", "pandas", "scikit-learn"]
 
 [project.scripts]
