@@ -14,7 +14,9 @@ class model(torch.nn.Module):
         super(model, self).__init__()
         self.embedding = torch.nn.Embedding(N, d)
         self.dropout1 = torch.nn.Dropout(0.1)
-        self.RNN = torch.nn.LSTM(d, e, batch_first=True, dropout=0.1)
+        self.RNN = torch.nn.LSTM(
+            d, e, batch_first=True, num_layers=3, dropout=0.1
+        )
         self.dropout2 = torch.nn.Dropout(0.1)
         self.linear = torch.nn.Linear(e, N)
         self.logsoftmax = torch.nn.LogSoftmax(dim=-1)
