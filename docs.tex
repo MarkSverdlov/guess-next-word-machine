@@ -111,7 +111,51 @@ As expected, we see both the training loss and the test loss decrease as the tra
 \section{Conclusion}
 In this work, we implemented a simple RNN-based model to predict the next word
 In this work, we sought out to predict the next word of a sentence, emulating a typical scenario of assisted typing over a touch device. We reframed this task as a statistical question of estimating the probabilistic \emph{language model} of the hypothetical user, and used machine-learning tools tackle this problem, as machine-learning turns large quantity of compute into a non-parametric estimate of statistical models. We wrote and shared the Python code over Pytorch that
-trains and infers the trained model over arbitrary textual data. Finally, we executed this code over an example dataset and get examples:
+trains and infers the trained model over arbitrary textual data. Finally, we executed this code over an example dataset and got some example outputs.
+
+\section{Example Outputs}
+\FloatBarrier
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{cc}
+    \toprule
+    Word & Probability \\
+    \midrule
+    to & \(0.34\) \\
+    the & \(0.04\) \\
+    you & \(0.04\) \\
+    \bottomrule
+    \end{tabular}
+    \caption{Completions for ``I love ''}
+\end{table}
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{cc}
+    \toprule
+    Word & Probability \\
+    \midrule
+    discussed & \(0.27\) \\
+    distilled & \(0.15\) \\
+    distorted & \(0.13\) \\
+    \bottomrule
+    \end{tabular}
+    \caption{Completions for ``This law is dis''}
+\end{table}
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{cc}
+    \toprule
+    Word & Probability \\
+    \midrule
+    front & \(0.13\) \\
+    first & \(0.09\) \\
+    floor & \(0.05\) \\
+    \bottomrule
+    \end{tabular}
+    \caption{Completions for ``Uncle Tonny went to the f''}
+\end{table}
+\FloatBarrier
 
 \printbibliography
 \end{document}
