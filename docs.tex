@@ -1,4 +1,4 @@
-\documentclass{amsart}
+\documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage{amsthm, amsmath, amssymb, amsfonts} % general mathmode commands
 \usepackage{bm} % for \bm
@@ -51,11 +51,14 @@
 
 \begin{document}
     
+
+\maketitle
+
 \begin{abstract}
     This work implements a simple RNN that is used as a guess-next-word-machine. The program gets an English sentence as an input, together with optionally the first letters of the next word, and outputs the three most probable words together with their conditional probability, as reported by the model. The model itself is trained to output (non-calibrated) probabilities to the next words out of a large vocabulary of possible words by training on a corpus of English
     sentences.
 \end{abstract}
-\maketitle
+
 \section{Introduction}
 Guessing the next word of a sentence is an important capability and feature of many user-facing applications that handle text input via manual typing. Manual typing, especially on hand-held devices like smartphones and tablets is cumbersome, slow and error prone, and software vendors often attach `guess-next-word' machine to their touch keyboards, to assist the user in this endeavour. The idea is that if whenever the `guess-next-word' machine is successful in predicting the next word the user
 has planned to type, they may click on the suggested word instead of typing it, saving \~80\% of their time, and improving the user experience and satisfaction from the overall software.
