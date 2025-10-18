@@ -101,25 +101,6 @@ class DataProcessor:
         ys = torch.stack(ys)
         return Xs, ys
 
-    # def data_record_generator(self):
-    #         while True:
-    #             line = random.choice(self.lines)
-    #             if len(line) < 2:
-    #                 continue
-    #             start_index = random.randint(0, len(line) - 1)
-    #             seq_length = random.randint(1, len(line) - start_index)
-    #             input_seq = line[start_index : start_index + seq_length - 1]
-    #             output_seq = line[start_index + 1: start_index + seq_length]
-    #             yield input_seq, output_seq
-    # def generate_data(self, num_records=200):
-    #     data = [
-    #         (input_seq, output_seq)
-    #         for (input_seq, output_seq), _ in zip(
-    #             self.data_record_generator(), range(num_records)
-    #         )
-    #     ]
-    #     return data
-
 
 def get_word_total_by_unique_words(
     word_counter, number_of_unique_words
