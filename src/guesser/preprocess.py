@@ -135,7 +135,7 @@ def chart_statistics(lines):
     lengths = np.array([len(line) for line in lines])
     mean = lengths.mean()
     median = np.median(lengths)
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(6, 3.375))
     ax.hist(lengths, bins=50)
     ax.text(
         0.3,
@@ -160,7 +160,7 @@ def chart_statistics(lines):
     word_counter = Counter()
     for line in lines:
         word_counter.update(line)
-    fig, axes = plt.subplots(2, 2, figsize=(10, 6))
+    fig, axes = plt.subplots(2, 2, figsize=(6, 3.375))
     axes = axes.flatten()
     number_of_unique_words = len(word_counter.keys())
     fig.suptitle(
@@ -184,7 +184,7 @@ def chart_statistics(lines):
     axes[3].xaxis.set_tick_params(rotation=45)
     fig.savefig("word_frequency_distribution.png")
 
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(6, 3.375))
     x = list(range(1, number_of_unique_words + 1))
     y = list(
         get_word_total_by_unique_words(

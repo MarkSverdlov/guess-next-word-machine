@@ -1,0 +1,51 @@
+* Introduction
+This package includes data analysis, training and inference script for a guess -next-word-machine that tries to predict the next word in a text by the previous words. It is the programmatic part of my submission to course 85887540.
+
+* Installation Guide
+This repository is a Python package, so if Python is installed, it may be installed by:
+#+BEGIN_SRC bash
+python -m pip install git+https://github.com/MarkSverdlov/guess-next-word-machine.git
+  #+END_SRC
+
+assuming that python is the keyword use in the command line to invoke the Python executable. In Windows, sometimes =py= is used instead of =python=.
+
+* User Guide
+  The package offer three programs:
+  | Program          | Description                                                                                                                                                                                                            | Syntax                                                       |
+  |------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------|
+  | chart-statistics | Draws some charts for the data.                                                                                                                                                                                        | =chart-statistics [dataset]=                                 |
+  | train-model      | Use the data to train an RNN model. It dumps the model and additional artifacts into the current directory. It has many options that may be used to tune the training.                                                 | =train-model [dataset] [additional options]=                 |
+  | guess-next-word  | Output the three most likely words for =text=. If =model= or =vocab= are not given explictly, it looks for the files =model.pt= and =vocabulary.json= in the current working directory and fails if they do not exist. | =guess-next-word --model [model] --vocab [vocab] [sentence]= |
+
+Some additional remarks should be stated about =guess-next-word=. First, the program attempts
+to complete the last word in the sentence. For example
+#+BEGIN_SRC bash
+guess-next-word 'I love'
+#+END_SRC bash
+will attempt to complete the word /love/, resulting in output words like /love/, /lover/, etc.
+If you want to attempt to guess a completely new word, make sure your input ends with a space.
+For example
+#+BEGIN_SRC bash
+guess-next-word 'I love '
+#+END_SRC
+should result in competitions like /you/, /kitties/, etc.
+
+* Examples
+** "I love "
+| Word | Probability |
+|------+-------------|
+| to   |        0.34 |
+| the  |        0.04 |
+| you  |        0.04 |
+** "This law is dis"
+| Word      | Probability |
+|-----------+-------------|
+| discussed |        0.27 |
+| distilled |        0.15 |
+| distorted |        0.13 |
+** "Uncle Tonny went to the f"
+| Word  | Probability |
+|-------+-------------|
+| front |        0.13 |
+| first |        0.09 |
+| floor |        0.05 |
